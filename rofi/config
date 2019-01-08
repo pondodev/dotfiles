@@ -1,0 +1,7 @@
+rofi.theme: ~/.cache/wal/colors-rofi-dark.rasi
+rofi.lines: 5
+rofi.eh: 1
+rofi.padding: 200
+rofi.fullscreen: true
+rofi.bw: 0
+rofi.font: mono 64

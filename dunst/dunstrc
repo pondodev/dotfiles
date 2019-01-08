@@ -1,0 +1,15 @@
+;
+; dunst config
+; this is just copy pasted from my mate cyndrdev's dotfiles which
+; can be found at https://github.com/cyndrdev/dotfiles
+;
+
+[global]
+shrink = yes
+seperator_height = 10
+padding = 8
+horizontal_padding = 8
+markup = full
+format = "%s\n%b"
+
+stack_duplicates = false
