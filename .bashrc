@@ -8,6 +8,7 @@
 # Aliases
 alias ls='ls --color=auto'
 alias neofetch='neofetch --ascii ~/.ascii/ecorp'
+alias cleanup="~/.scripts/cleanup.sh"
 
 PS1='[\u@\h \W]\$ '
 
