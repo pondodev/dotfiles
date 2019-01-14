@@ -149,7 +149,7 @@ client.background       $c0
 
 # autostart
 exec compton --config ~/.config/compton/.compton.conf &
-exec feh --bg-fill '/home/daniel/Pictures/Wallpapers/wallpaper.png'
+exec wal -R
 exec_always --no-startup-id $HOME/.config/dunst/launch.sh
 
 # extra custom binds
