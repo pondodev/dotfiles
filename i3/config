@@ -156,3 +156,5 @@ exec_always --no-startup-id $HOME/.config/dunst/launch.sh
 bindsym Print exec flameshot gui -p ~/Pictures/Screenshots
 bindsym Shift+Print exec flameshot full -p ~/Pictures/Screenshots
 bindsym $mod+l exec i3lock-fancy -g
+bindsym $mod+Shift+plus exec xbacklight -inc 10
+bindsym $mod+Shift+minus exec xbacklight -dec 10
