@@ -9,4 +9,9 @@ fi
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 xrdb ~/.cache/wal/colors.Xresources
 
+# Rebind caps lock to escape
+setxkbmap us
+setxkbmap -option 'caps:ctrl_modifier'
+xcape -e 'Caps_Lock=Escape'
+
 exec i3
