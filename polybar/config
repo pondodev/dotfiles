@@ -39,8 +39,8 @@ module-margin-right = 2
 font-0 = "Misc Tamsyn:pixelsize=12;0"
 
 modules-left = i3
-modules-center = 
-modules-right = filesystem battery wlan eth date
+modules-center =
+modules-right = spotify filesystem battery wlan eth date
 
 override-redirect = false
 
@@ -145,6 +145,12 @@ format-discharging = <label-discharging>
 label-charging = charging %percentage%%
 label-discharging = %percentage%%
 label-full = full
+
+[module/spotify]
+type = custom/script
+interval = 1
+format = <label>
+exec = python ~/.config/polybar/spotify_status.py -f '{artist}: {song}'
 
 [settings]
 screenchange-reload = true
