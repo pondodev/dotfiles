@@ -8,6 +8,7 @@ config files for my archlinux install. will update as i change my setup, mostly 
 - **launcher:** rofi
 - **notifications:** dunst
 - **compositor:** compton
+- **shell:** zsh
 
 ## screenshots
 ### busy
