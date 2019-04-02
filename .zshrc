@@ -68,7 +68,7 @@ source $ZSH/oh-my-zsh.sh
 
 # aliases
 alias ls='ls --color=auto'
-alias neofetch='neofetch --ascii ~/.ascii/moebius'
+alias neofetch='neofetch --ascii ~/.ascii/squares'
 alias cleanup='~/.scripts/cleanup.sh'
 alias runelite='java -jar /usr/share/runelite/RuneLite.jar --mode=OFF'
 alias randomwallpaper='~/.scripts/randomwallpaper.sh'
