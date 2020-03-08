@@ -72,6 +72,18 @@ alias neofetch='neofetch --ascii ~/.ascii/squares'
 alias cleanup='~/.scripts/cleanup.sh'
 alias runelite='java -jar /usr/share/runelite/RuneLite.jar --mode=OFF'
 alias randomwallpaper='~/.scripts/randomwallpaper.sh'
+alias swinvpn='sudo openconnect -bq -u 102084174 vpn.swin.edu.au'
+alias swinssh='ssh s102084174@mercury.swin.edu.au'
 
 # pretty colours for every new terminal
 (cat ~/.cache/wal/sequences &)
+
+# devkit stuffs
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=${DEVKITPRO}/devkitARM
+export DEVKITPPC=${DEVKITPRO}/devkitPPC
+
+export PATH=${DEVKITPRO}/tools/bin:$PATH
+
+# adding FASMARM to path
+export PATH=~/FASMARM:$PATH

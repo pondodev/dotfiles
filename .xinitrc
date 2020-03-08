@@ -9,14 +9,11 @@ fi
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 xrdb ~/.cache/wal/colors.Xresources
 
-# Rebind caps lock to escape
-setxkbmap us
-setxkbmap -option 'caps:ctrl_modifier'
-xcape -e 'Caps_Lock=Escape'
-
 # reverse touchpad scroll
 xinput set-button-map 11 1 2 3 5 4 6 7
 
-exec i3
-#export GDK_BACKEND=x11
-#exec gnome-session
+# remap escape to caps lock
+setxkbmap us
+setxkbmap -option caps:escape
+
+exec bspwm
