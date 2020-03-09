@@ -21,16 +21,19 @@ voloff="\uf026"
 wifi="\uf1eb"
 sadface="\uf119"
 
+# and then our output :)
+output=""
+
 set_colours() {
-  echo -n "%{F$foreground}%{B$background}"
+  output="$output%{F$foreground}%{B$background}"
 }
 
 set_inverse_colours() {
-  echo -n "%{F$background}%{B$foreground}"
+  output="$output%{F$background}%{B$foreground}"
 }
 
 hostname() {
-    echo -n "$USER@$hostname"
+    output="$output$USER@$hostname"
 }
 
 battery() {
@@ -40,34 +43,34 @@ battery() {
 
         # display charging/danger icon
         if [ $status == "Charging" ]; then
-            echo -ne "$charging "
+            output="$output$charging "
         elif (( level <= 10 )); then
-            echo -ne "$danger "
+            output="$output$danger "
         fi
 
         # display battery level
         if (( level > 80 )); then
-            echo -ne "$batt4"
+            ouptut="$output$batt4"
         elif (( level > 60 )); then
-            echo -ne "$batt3"
+            output="$output$batt3"
         elif (( level > 40 )); then
-            echo -ne "$batt2"
+            output="$output$batt2"
         elif (( level > 20 )); then
-            echo -ne "$batt1"
+            output="$output$batt1"
         else
-            echo -ne "$batt0"
+            output="$output$batt0"
         fi
 
         # finally display the actual number
-        echo -n "$percent"
+        output="$output$percent"
 }
 
 network() {
     ssid=$(iwgetid -r)
     if [ ${#ssid} = 0 ]; then
-        echo -ne "$sadface no network connected"
+        output="$output$sadface no network connected"
     else
-        echo -ne "$wifi $ssid"
+        output="$output$wifi $ssid"
     fi
 }
 
@@ -82,17 +85,19 @@ bspwm() {
     do
         if [[ $element = F* || $element = O* ]]; then
             # show active workspace
-            echo -n $(set_inverse_colours) " ${element:1} " $(set_colours)
+            set_inverse_colours
+            output="$output  ${element:1}  "
+            set_colours
         elif [[ $element = o* ]]; then
             # show inactive workspaces
-            echo -n "  ${element:1}  "
+            output="$output  ${element:1}  "
         fi
     done
 }
 
 clock() {
     datetime=$(date "+%A %B %d, %H:%M")
-    echo -n "$datetime"
+    output="$output$datetime"
 }
 
 volume() {
@@ -109,13 +114,13 @@ volume() {
 
     # display if volume is muted or not
     if [ $status = "[on]" ]; then
-        echo -ne "$volon "
+        output="$output$volon "
     else
-        echo -ne "$voloff "
+        output="$output$voloff "
     fi
 
     # display volume percent
-    echo -n "$vol"
+    output="$output$vol"
 }
 
 while true; do
@@ -125,13 +130,24 @@ while true; do
         break
     fi
 
-    echo -n "$(set_colours)"
+    set_colours
 
     # left side
-    echo -n "$(bspwm)"
+    bspwm
     # center
-    echo -n "%{c} $(hostname) // $(clock)"
+    output="$output%{c} "
+    hostname
+    output="$output // "
+    clock
     # right side
-    echo "%{r}$(network) // $(volume) // $(battery) "
+    output="$output%{r}"
+    network
+    output="$output // "
+    volume
+    output="$output // "
+    battery
+
+    echo -ne "$output "
+    output=""
     sleep $update;
 done

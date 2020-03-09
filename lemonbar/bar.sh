@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 
-font1="-misc-tamsyn-medium-r-normal--16-*"
-font2="-misc-fontawesome-medium-r-normal--*"
+# note: requires package lemonbar-xft-git
+font1="Source Code Pro Light:size=10"
+font2="FontAwesome"
 bar=$(which lemonbar)
 config="$HOME/.config/lemonbar/config.sh"
 

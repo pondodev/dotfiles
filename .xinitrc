@@ -14,6 +14,8 @@ xinput set-button-map 11 1 2 3 5 4 6 7
 
 # remap escape to caps lock
 setxkbmap us
-setxkbmap -option caps:escape
+#setxkbmap -option caps:escape
+setxkbmap -option 'caps:ctrl_modifier'
+xcape -e 'Caps_Lock=Escape'
 
 exec bspwm
