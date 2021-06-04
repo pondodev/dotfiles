@@ -5,7 +5,7 @@
 
 # constants
 update=0.2
-hostname="$(hostname)"
+hostname="$(cat /proc/sys/kernel/hostname)"
 
 batt4="\uf240"
 batt3="\uf241"
@@ -37,32 +37,31 @@ hostname() {
 }
 
 battery() {
-        percent=$(acpi --battery | cut -d, -f2)
-        level=${percent::-1}
-        status=$(acpi --battery | cut -d, -f1 | cut -d: -f2)
+        level=$(cat /sys/class/power_supply/BAT0/capacity)
+	status="$(cat /sys/class/power_supply/BAT0/status)"
 
         # display charging/danger icon
         if [ $status == "Charging" ]; then
             output="$output$charging "
-        elif (( level <= 10 )); then
+        elif [ "$level" -le 10 ]; then
             output="$output$danger "
         fi
 
         # display battery level
-        if (( level > 80 )); then
-            ouptut="$output$batt4"
-        elif (( level > 60 )); then
-            output="$output$batt3"
-        elif (( level > 40 )); then
-            output="$output$batt2"
-        elif (( level > 20 )); then
-            output="$output$batt1"
+        if [ "$level" -gt 80 ]; then
+            output="$output$batt4 "
+        elif [ "$level" -gt 60 ]; then
+            output="$output$batt3 "
+        elif [ "$level" -gt 40 ]; then
+            output="$output$batt2 "
+        elif [ "$level" -gt 20 ]; then
+            output="$output$batt1 "
         else
-            output="$output$batt0"
+            output="$output$batt0 "
         fi
 
         # finally display the actual number
-        output="$output$percent"
+        output="$output$level%"
 }
 
 network() {
@@ -106,7 +105,7 @@ volume() {
         | head -n 1)
 
     vol=$(echo $info \
-        | awk '{print $5}' \
+        | awk '{print $4}' \
         | sed 's/[^0-9%]//g')
 
     status=$(echo $info \

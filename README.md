@@ -1,7 +1,5 @@
 # dotfiles
-config files for my archlinux install. will update as i change my setup, mostly here so i can keep configs consistent between my desktop and laptop but anyone is more than welcome to use these configs as they please.
-
-in a crazy turn of events that absolutely nobody saw coming, i've now switched to bspwm. lots of my configs are just scuffed copies of my mates ktyldev and cyndrdev, so you probably want to look at their configs more than mine.
+config for my archlinux install. sometimes i use them on void too but usually things break.
 
 ## the stuff i use
 - **os:** archlinux
@@ -10,8 +8,8 @@ in a crazy turn of events that absolutely nobody saw coming, i've now switched t
 - **bar:** lemonbar
 - **notifier:** dunst
 - **shell:** zsh
-- **terminal:** terminator
-- **terminal font:** source code pro extra light
+- **terminal:** urxvt
+- **terminal font:** source code pro
 
 ## screenshots
 ### busy

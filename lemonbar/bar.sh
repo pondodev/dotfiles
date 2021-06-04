@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
 # note: requires package lemonbar-xft-git
-font1="Source Code Pro Light:size=10"
+font1="Source Code Pro:size=12"
 font2="FontAwesome"
+font3="Source Han Sans"
 bar=$(which lemonbar)
 config="$HOME/.config/lemonbar/config.sh"
 
@@ -21,4 +22,4 @@ resArray=(${res//x/ })
 x=1920
 y=35
 
-. $config | $bar -p -f "$font1" -f "$font2" -g ${x}x${y}
+. $config | $bar -p -f "$font1" -f "$font2" -f "$font3" -g ${x}x${y}

@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	terminator
+	urxvt
 
 # program launcher
 super + @space
@@ -34,9 +34,9 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest node
+# swap the current node and the biggest window
 super + g
-	bspc node -s biggest
+	bspc node -s biggest.window
 
 #
 # state/flags
@@ -62,9 +62,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous node in the current desktop
+# focus the next/previous window in the current desktop
 super + {_,shift + }c
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -126,15 +126,15 @@ super + {Left,Down,Up,Right}
 
 # mute
 super + F1
-        pactl set-sink-mute 0 toggle
+	pactl set-sink-mute 0 toggle
 
 # volume down
 super + F2
-        pactl set-sink-volume 0 -5%
+	pactl set-sink-volume 0 -5%
 
 # volume up
 super + F3
-        pactl set-sink-volume 0 +5%
+	pactl set-sink-volume 0 +5%
 
 #
 # backlight control
@@ -142,11 +142,11 @@ super + F3
 
 # backlight down
 super + F5
-        xbacklight -dec 10
+	xbacklight -dec 10
 
 # backlight up
 super + F6
-        xbacklight -inc 10
+	xbacklight -inc 10
 
 #
 # misc binds
@@ -154,4 +154,4 @@ super + F6
 
 # screenshot
 super + Print
-        flameshot gui
+	flameshot gui

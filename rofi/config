@@ -1,6 +1,6 @@
-rofi.theme:              ~/.cache/wal/colors-rofi-dark.rasi
-rofi.lines:              5
-rofi.fullscreen:         true
-rofi.font:               Source Code Pro Light 64
-rofi.hide-scrollbar:     true
-rofi.separator-style:    none
+rofi.theme:           ~/.cache/wal/colors-rofi-dark.rasi
+rofi.lines:           5
+rofi.fullscreen:      false
+rofi.font:            Source Code Pro 32
+rofi.hide-scrollbar:  true
+rofi.separator-style: none
