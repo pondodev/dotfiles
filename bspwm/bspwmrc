@@ -17,6 +17,6 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 kitty &
-picom &
+picom --config ~/.config/picom/picom.conf &
 . "$HOME/.config/lemonbar/bar.sh" &
 . "$HOME/.config/dunst/launch.sh" &
