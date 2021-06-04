@@ -1,5 +1,6 @@
 #! /bin/sh
 
+wal -a "90" -i ~/Pictures/wallpapers/pixel.jpg
 . "$HOME/.cache/wal/colors.sh"
 
 pgrep -x sxhkd > /dev/null || sxhkd &
@@ -15,8 +16,7 @@ bspc config split_ratio          0.5
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-feh --bg-fill ~/Pictures/wallpapers/pixel.jpg
 kitty &
-picom --config ~/.config/picom/picom.conf &
+picom &
 . "$HOME/.config/lemonbar/bar.sh" &
 . "$HOME/.config/dunst/launch.sh" &

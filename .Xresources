@@ -1,2 +1,3 @@
 URxvt.scrollBar: false
 URxvt*font: xft:Source Code Variable
+URxvt*depth: 32
