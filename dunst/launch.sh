@@ -13,5 +13,5 @@ dunst \
 	-cf "${color0:-#000000}" \
 	-nf "${color0:-#000000}" \
 	-fn "Source Code Pro 12" \
-	-geometry "600x40-50+50" \
+	-geometry "600x40-50+80" \
 >> /dev/null 2>&1 &
