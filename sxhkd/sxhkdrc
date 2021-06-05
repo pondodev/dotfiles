@@ -155,3 +155,7 @@ super + F6
 # screenshot
 super + Print
 	flameshot gui
+
+# lock
+super + shift + Escape
+        betterlockscreen -l blur
