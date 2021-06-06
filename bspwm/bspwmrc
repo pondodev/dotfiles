@@ -1,16 +1,17 @@
 #! /bin/sh
 
-wal -a "90" -i ~/Pictures/wallpapers/pixel.jpg
+wal -a "90" -i ~/Pictures/wallpapers/minimalmountains.jpg
 . "$HOME/.cache/wal/colors.sh"
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-bspc monitor -d 一 二 三 四 五 六 七 八 九 十
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 bspc config border_width         5
 bspc config window_gap           10
 bspc config normal_border_color  "$color0"
 bspc config focused_border_color "$color1"
+bspc config top_padding 65
 
 bspc config split_ratio          0.5
 bspc config borderless_monocle   true

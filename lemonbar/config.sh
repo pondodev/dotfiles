@@ -132,6 +132,7 @@ while true; do
     set_colours
 
     # left side
+    output="$output  "
     bspwm
     # center
     output="$output%{c} "
@@ -146,7 +147,7 @@ while true; do
     output="$output // "
     battery
 
-    echo -ne "$output "
+    echo -ne "$output    \n"
     output=""
     sleep $update;
 done

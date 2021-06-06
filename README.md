@@ -9,7 +9,7 @@ config for my archlinux install. sometimes i use them on void too but usually th
 - **notifier:** dunst
 - **shell:** zsh
 - **terminal:** urxvt
-- **terminal font:** source code pro
+- **font:** gohufont
 
 ## screenshots
 ### busy

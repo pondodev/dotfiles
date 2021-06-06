@@ -1,0 +1,9 @@
+configuration {
+	lines: 10;
+	font: "Gohu GohuFont 12";
+	separator-style: "none";
+	hide-scrollbar: true;
+	fullscreen: false;
+	theme: "~/.cache/wal/colors-rofi-dark.rasi";
+        width: 25;
+}

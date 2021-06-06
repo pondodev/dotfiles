@@ -11,5 +11,6 @@ padding = 8
 horizontal_padding = 8
 markup = full
 format = "%s\n%b"
+font = Gohu GohuFont 12
 
 stack_duplicates = false
