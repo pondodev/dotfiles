@@ -30,7 +30,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 call VimPlugInit()
 
 " init lsp and autocomplete stuff
-luafile /Users/daniel/.config/nvim/lsp.lua
+luafile $HOME/.config/nvim/lsp.lua
 
 " auto commands
 autocmd TermOpen * setlocal nonumber norelativenumber
