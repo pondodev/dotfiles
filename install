@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo installing some awful dotfiles
+
+# install nvim configs
+which nvim &> /dev/null
+if [ $? -eq 0 ]
+then
+    echo installing nvim dots
+    cp -r nvim/ $HOME/.config/nvim/
+
+    theme_name=gruvbox.vim
+    theme_dir=$HOME/.config/nvim/colors/
+    mkdir -p $theme_dir
+    curl https://raw.githubusercontent.com/morhetz/gruvbox/master/colors/gruvbox.vim > $theme_dir$theme_name
+
+    airline_theme_dir=$HOME/.local/share/nvim/site/autoload/airline/themes/
+    mkdir -p $airline_theme_dir
+    curl https://raw.githubusercontent.com/morhetz/gruvbox/master/autoload/airline/themes/gruvbox.vim > $airline_theme_dir$theme_name
+else
+    echo neovim not installed, skipping
+fi
+
+# TODO: install literally everything else lol
+
+echo done!
+
