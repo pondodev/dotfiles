@@ -42,7 +42,9 @@ endfunction
 function EditWorkspace(...)
     if !a:0
         if exists("g:user_workspace_active") && g:user_workspace_active != "default"
-            execute "edit " . g:user_workspace_active
+            let makefile_name = g:const_workspace_env_dir . "/" . g:user_workspace_active . ".mk"
+            execute "edit " . makefile_name
+            return
         else
             echom "ERROR: no environment provided"
             return
