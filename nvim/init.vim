@@ -1,10 +1,12 @@
+runtime consts.vim
 runtime plugins.vim
 runtime helpers.vim
+runtime binds.vim
 
 syntax on
 colo gruvbox
 
-set smartcase
+set ignorecase
 set confirm
 set number relativenumber
 set nu rnu
@@ -21,6 +23,10 @@ set scrolloff=6
 set splitbelow
 set splitright
 set nowrap
+set list
+set autochdir
+set cursorline
+set spell spelllang=en_gb spelloptions="camel"
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -37,13 +43,16 @@ let &shellpipe = g:dispatch_pipe . " | tee %s"
 call VimPlugInit()
 
 " init lsp and autocomplete stuff
-luafile /Users/daniel/.config/nvim/lsp.lua
+luafile $HOME/.config/nvim/lsp.lua
 
-" open a terminal without line numbers
+" open terminal/quickfix without line numbers
 autocmd TermOpen * setlocal nonumber norelativenumber
+autocmd BufNew,BufRead Quickfix setlocal nonumber norelativenumber
 
 " scons related files should be read as python files (because, you know, they
 " are)
 autocmd BufNewFile,BufRead SConstruct set syntax=python
 autocmd BufNewFile,BufRead SConscript set syntax=python
+
+autocmd BufNewFile,BufRead *.md set wrap textwidth=120
 
