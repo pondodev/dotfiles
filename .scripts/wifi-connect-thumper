@@ -1,6 +1,0 @@
-#!/usr/bin/bash
-
-echo "scanning..."
-nmcli d wifi list --rescan yes &> /dev/null
-echo "connecting..."
-nmcli d wifi connect Thumper
