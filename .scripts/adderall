@@ -46,6 +46,10 @@ def main():
                 ["which", args.editor],
                 f"'{args.editor}' was not found")
         editor = args.editor
+    else:
+        simple_silent_cmd_check(
+                ["which", editor],
+                f"'{editor}' was not found. please set a different editor with -e")
 
     print("finding unstaged and untracked files...")
     unstaged = subprocess.run(
