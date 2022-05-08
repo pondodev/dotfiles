@@ -73,6 +73,15 @@ function ExitWorkspace()
     NERDTreeClose
 endfunction
 
+" quickly retab a file if needed. this is mostly when python doesn't play
+" nice with me because of inconsistent indents honestly
+function QuickRetab()
+    let old_expandtab = &expandtab
+    set noexpandtab
+    %retab!
+    let &expandtab = old_expandtab
+endfunction
+
 " :qa is awkward and i hate it
 cmap qq qa
 

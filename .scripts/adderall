@@ -79,6 +79,10 @@ def main():
                 "edit": action_edit
             })
 
+    commit = input("commit changes? (y/n)\n> ")
+    if commit == "y":
+        simple_cmd_check(["git", "commit"], "failed to commit changes")
+
     print("done! have a nice day :)")
 
 def init_args():
