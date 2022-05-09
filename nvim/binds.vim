@@ -5,7 +5,7 @@ nmap <C-g>a :Git<Space>add<Space>%<CR>
 nmap <C-g>c :Git<Space>commit<CR>
 nmap <C-g>b :Git<Space>blame<CR>
 nmap <C-g>l :Git<Space>log<CR>
-nmap <C-g>d :Git<Space>diff<Space>%s<CR>
+nmap <C-g>d :Git<Space>diff<Space>%<CR>
 nmap <C-g>s :Git<Space>status<CR>
 
 " make

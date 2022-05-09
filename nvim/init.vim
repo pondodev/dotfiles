@@ -22,7 +22,6 @@ set scrolloff=6
 set splitbelow splitright
 set nowrap
 set list
-set autochdir
 set cursorline
 set spell spelllang=en_gb spelloptions="camel"
 set foldenable foldlevelstart=999 foldmethod=syntax
