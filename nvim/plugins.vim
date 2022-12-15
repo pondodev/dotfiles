@@ -29,6 +29,9 @@ function VimPlugInit()
     Plug 'tpope/vim-fugitive'
     Plug 'pondodev/vim-dispatch'
 
+    " language support
+    Plug 'ziglang/zig.vim'
+
     call plug#end()
 endfunction
 
