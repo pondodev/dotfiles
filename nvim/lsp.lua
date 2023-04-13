@@ -4,17 +4,18 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
--- setup lsp_installer
-local lsp_installer = require("nvim-lsp-installer")
+-- setup mason
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
 
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        server_capabilities = capabilities,
-        debounce_text_changes = 150,
-    }
-
-    server:setup(opts)
-end)
+mason.setup()
+mason_lspconfig.setup()
+mason_lspconfig.setup_handlers {
+	function (server_name)
+		lspconfig[server_name].setup {}
+	end,
+	--- custom lsp config goes here
+}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -58,5 +59,21 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+}
+
+-- trouble setup
+local trouble = require 'trouble'
+trouble.setup {
+	icons = false,
+	fold_open = "v",
+	fold_closed = ">",
+	indent_lines = false,
+	signs = {
+		error = "E",
+		warning = "W",
+		hint = "H",
+		information = "I"
+	},
+	use_diagnostic_signs = false
 }
 

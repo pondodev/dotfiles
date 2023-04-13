@@ -17,11 +17,13 @@ function VimPlugInit()
     " autocomplete/error checking
     Plug 'neovim/nvim-lsp'
     Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/nvim-lsp-installer'
+	Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+	Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'L3MON4D3/LuaSnip'
+    Plug 'folke/trouble.nvim'
 
     " misc useful
     Plug 'preservim/nerdtree'
@@ -30,7 +32,8 @@ function VimPlugInit()
     Plug 'pondodev/vim-dispatch'
 
     " language support
-    Plug 'ziglang/zig.vim'
+	Plug 'ziglang/zig.vim'
+	Plug 'Tetralux/odin.vim'
 
     call plug#end()
 endfunction
