@@ -26,6 +26,12 @@ set cursorline
 set spell spelllang=en_gb spelloptions="camel"
 set foldenable foldlevelstart=999 foldmethod=syntax
 
+let g:mapleader = ","
+
+if exists("g:neovide")
+	set guifont=Fira\ Code:h11
+endif
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -54,4 +60,6 @@ autocmd BufNewFile,BufRead SConscript set syntax=python
 
 autocmd BufNewFile,BufRead *.md set wrap textwidth=120
 autocmd BufNewFile,BufRead *.gmi set wrap
+
+set shell=/bin/zsh
 
