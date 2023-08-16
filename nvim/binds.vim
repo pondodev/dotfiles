@@ -20,3 +20,8 @@ map! <C-e> :NERDTreeToggle<CR>
 noremap <Space> za
 noremap <CR> zA
 
+" telescope binds
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+

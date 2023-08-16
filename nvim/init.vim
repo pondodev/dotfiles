@@ -26,7 +26,7 @@ set cursorline
 set spell spelllang=en_gb spelloptions="camel"
 set foldenable foldlevelstart=999 foldmethod=syntax
 
-let g:mapleader = ","
+let g:mapleader = "\\"
 
 if exists("g:neovide")
 	set guifont=Fira\ Code:h11
