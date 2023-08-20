@@ -1,3 +1,5 @@
+" TODO: port to lua
+
 " when nvim feels kinda ~ s l o w ~
 function! DeleteInactiveBufs()
 	"From tabpagebuflist() help, get a list of all buffers in all tabs
@@ -102,7 +104,4 @@ function QuickRetab()
     %retab!
     let &expandtab = old_expandtab
 endfunction
-
-" :qa is awkward and i hate it
-cmap qq qa
 
