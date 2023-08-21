@@ -49,10 +49,12 @@ vim.g["airline_powerline_fonts"]                    = 1
 vim.g.dispatch_pipe = "2>&1 | sed -e $'s/\\x1b\\[[0-9;]*m//g'"
 vim.opt.shellpipe = vim.g.dispatch_pipe .. " | tee %s"
 
-require("plugins")  -- load plugins
-require("zephyr")   -- set colour theme
-require("lsp")      -- configure lsp
-require("binds")    -- configure binds
+require("consts")
+require("plugins")      -- load plugins
+require("zephyr")       -- set colour theme
+require("lsp")          -- configure lsp
+require("workspaces")   -- workspace functionality
+require("binds")        -- configure binds
 
 -- open terminal/quickfix without line numbers
 local function remove_line_numbers()
