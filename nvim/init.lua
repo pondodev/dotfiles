@@ -1,4 +1,4 @@
-vim.opt.syntax 		    = "on"
+vim.opt.syntax          = "on"
 vim.opt.ignorecase      = true
 vim.opt.confirm         = true
 vim.opt.number          = true
@@ -24,6 +24,8 @@ vim.opt.spelloptions    = "camel,noplainbuffer"
 vim.opt.foldenable      = true
 vim.opt.foldlevelstart  = 999
 vim.opt.foldmethod      = "syntax"
+vim.opt.list            = true
+vim.opt.listchars       = "tab:>·,trail:-"
 
 -- set shell to zsh, with bash as a fallback
 local shell = vim.fn.system({"which", "zsh"})

@@ -31,7 +31,7 @@ end
 
 function open_workspace(target_workspace)
 	if (target_workspace == nil) then
-		print("Invalid workspace")
+		print("Workspace name required")
 		return
 	end
 
@@ -47,6 +47,7 @@ function open_workspace(target_workspace)
 	workspace_context["_workspace_dir"] = target_workspace
 end
 
+-- command to open workspace
 vim.api.nvim_create_user_command("Workspace",
 	function(opt)
 		target_workspace = get_workspace_files()[opt.args]
@@ -64,6 +65,7 @@ vim.api.nvim_create_user_command("Workspace",
 	}
 )
 
+-- command to open file with all workspaces listed
 vim.api.nvim_create_user_command("WorkspacePaths",
 	function(opt)
 		vim.cmd("e " .. Consts.WORKSPACE_FILE)
