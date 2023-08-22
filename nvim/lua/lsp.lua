@@ -1,8 +1,8 @@
 -- add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local lspconfig = require('lspconfig')
+local lspconfig = require("lspconfig")
 
 -- setup mason
 local mason = require("mason")
@@ -18,10 +18,10 @@ mason_lspconfig.setup_handlers {
 }
 
 -- luasnip setup
-local luasnip = require 'luasnip'
+local luasnip = require("luasnip")
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
+local cmp = require("cmp")
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -29,14 +29,14 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -44,8 +44,8 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -53,16 +53,16 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end, { "i", "s" }),
   }),
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
   },
 }
 
 -- trouble setup
-local trouble = require 'trouble'
+local trouble = require("trouble")
 trouble.setup {
 	icons = false,
 	fold_open = "v",

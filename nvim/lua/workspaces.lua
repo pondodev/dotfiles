@@ -1,9 +1,3 @@
-function file_exists(path)
-	local file = io.open(path, "rb")
-	if file then file:close() end
-	return file ~= nil
-end
-
 function get_workspace_files()
 	function readall(filename)
 		local fh = assert(io.open(filename, "rb"))
@@ -13,14 +7,14 @@ function get_workspace_files()
 	end
 
 	local available_workspace = {}
-	local workspace_path = WORKSPACE_FILE
-	if (file_exists(workspace_path)) then
+	local workspace_path = Consts.WORKSPACE_FILE
+	if (Helpers.file_exists(workspace_path)) then
 		local data = readall(workspace_path)
-		for line in data:gmatch '[^\n]+' do
-			local val = string.find(line, '=')
+		for line in data:gmatch "[^\n]+" do
+			local val = string.find(line, "=")
 			if (val ~= nil) then
-				project_name = string.sub(line, 0, val - 1):gsub('%s+', "")
-				project_path = vim.fn.expand(string.sub(line, val + 1):gsub('%s+', ""))
+				project_name = string.sub(line, 0, val - 1):gsub("%s+", "")
+				project_path = vim.fn.expand(string.sub(line, val + 1):gsub("%s+", ""))
 				available_workspace[project_name] = project_path
 			end
 		end
@@ -41,19 +35,19 @@ function open_workspace(target_workspace)
 		return
 	end
 
-	vim.cmd('cd '..target_workspace)
-	vim.cmd('Ex '..target_workspace)
+	vim.cmd("cd " .. target_workspace)
+	vim.cmd("Ex " .. target_workspace)
 
-	local workspace_lua = target_workspace..'/workspace.lua'
+	local workspace_lua = target_workspace .. "/workspace.lua"
 
 	workspace_context = {}
-	if file_exists(workspace_lua) then
-		vim.cmd('so '..workspace_lua)
+	if Helpers.file_exists(workspace_lua) then
+		vim.cmd("so " .. workspace_lua)
 	end
-	workspace_context['_workspace_dir'] = target_workspace
+	workspace_context["_workspace_dir"] = target_workspace
 end
 
-vim.api.nvim_create_user_command('Workspace',
+vim.api.nvim_create_user_command("Workspace",
 	function(opt)
 		target_workspace = get_workspace_files()[opt.args]
 		open_workspace(target_workspace)
@@ -70,9 +64,9 @@ vim.api.nvim_create_user_command('Workspace',
 	}
 )
 
-vim.api.nvim_create_user_command('WorkspacePaths',
+vim.api.nvim_create_user_command("WorkspacePaths",
 	function(opt)
-		vim.cmd('e '..WORKSPACE_FILE)
+		vim.cmd("e " .. Consts.WORKSPACE_FILE)
 	end,
 	{ nargs = 0, }
 )
