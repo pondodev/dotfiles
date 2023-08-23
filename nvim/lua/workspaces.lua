@@ -64,6 +64,10 @@ Workspace.open = function (workspace_dir, workspace_name)
 		print("result? " .. result)
 		load_config_file(workspace_config_file)
 	end
+
+	vim.opt.title = true
+	local indicator = Consts.WORKSPACE_INDICATORS[Helpers.random_num(#Consts.WORKSPACE_INDICATORS)]
+	vim.opt.titlestring = indicator .. " wksp: " .. workspace_name
 end
 
 -- command to open workspace
@@ -110,6 +114,7 @@ vim.api.nvim_create_user_command("WorkspaceConfig",
 	{ nargs = 0, }
 )
 
+-- command to run a workspace command alias
 vim.api.nvim_create_user_command("WorkspaceCmd",
 	function(opt)
 		if Workspace.context["_workspace_name"] == nil then
