@@ -6,3 +6,7 @@ Helpers.file_exists = function(path)
 	return file ~= nil
 end
 
+Helpers.string_starts_with = function(a, b)
+	return string.sub(a, 1, #b) == b
+end
+

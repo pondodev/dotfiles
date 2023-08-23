@@ -1,5 +1,9 @@
-function get_workspace_files()
-	function readall(filename)
+Workspace = {}
+Workspace.context = {}
+vim.fn.mkdir(Consts.WORKSPACE_CONFIG_DIR, "p")
+
+Workspace.get_workspace_files = function()
+	local function readall(filename)
 		local fh = assert(io.open(filename, "rb"))
 		local contents = assert(fh:read(_VERSION <= "Lua 5.2" and "*a" or "a"))
 		fh:close()
@@ -7,14 +11,14 @@ function get_workspace_files()
 	end
 
 	local available_workspace = {}
-	local workspace_path = Consts.WORKSPACE_FILE
+	local workspace_path = Consts.WORKSPACES_FILE
 	if (Helpers.file_exists(workspace_path)) then
 		local data = readall(workspace_path)
 		for line in data:gmatch "[^\n]+" do
 			local val = string.find(line, "=")
 			if (val ~= nil) then
-				project_name = string.sub(line, 0, val - 1):gsub("%s+", "")
-				project_path = vim.fn.expand(string.sub(line, val + 1):gsub("%s+", ""))
+				local project_name = string.sub(line, 0, val - 1):gsub("%s+", "")
+				local project_path = vim.fn.expand(string.sub(line, val + 1):gsub("%s+", ""))
 				available_workspace[project_name] = project_path
 			end
 		end
@@ -22,43 +26,63 @@ function get_workspace_files()
 	return available_workspace
 end
 
-workspace_context = {}
-function workspace_setup(opts)
+Workspace.setup = function (opts)
 	if opts ~= nil then
-		workspace_context = opts
+		Workspace.context.opts = opts
 	end
 end
 
-function open_workspace(target_workspace)
-	if (target_workspace == nil) then
-		print("Workspace name required")
+Workspace.open = function (workspace_dir, workspace_name)
+	if (workspace_dir == nil or workspace_name == nil) then
+		print("workspace directory/name required")
 		return
 	end
 
-	vim.cmd("cd " .. target_workspace)
-	vim.cmd("Ex " .. target_workspace)
+	vim.cmd("cd " .. workspace_dir)
+	vim.cmd("Ex " .. workspace_dir)
 
-	local workspace_lua = target_workspace .. "/workspace.lua"
+	Workspace.context = {}
+	Workspace.context["_workspace_dir"] = workspace_dir
+	Workspace.context["_workspace_name"] = workspace_name
 
-	workspace_context = {}
-	if Helpers.file_exists(workspace_lua) then
-		vim.cmd("so " .. workspace_lua)
+	-- check for existence of workspace.lua file in the workspace dir
+	local local_workspace_config_file = workspace_dir .. "/workspace.lua"
+	local workspace_config_file = Consts.WORKSPACE_CONFIG_DIR .. "/" .. workspace_name .. ".lua"
+
+	local function load_config_file(path)
+		Workspace.context["_workspace_config"] = path
+		vim.cmd("so " .. path)
 	end
-	workspace_context["_workspace_dir"] = target_workspace
+
+	if Helpers.file_exists(local_workspace_config_file) then -- config file in workspace
+		load_config_file(local_workspace_config_file)
+	elseif Helpers.file_exists(workspace_config_file) then -- config file in nvim data directory
+		load_config_file(workspace_config_file)
+	else -- no config file, copy template over and load it
+		print("copying " .. Consts.WORKSPACE_CONFIG_TEMPLATE_FILE .. " to " .. workspace_config_file)
+		local result = vim.fn.system({"cp", Consts.WORKSPACE_CONFIG_TEMPLATE_FILE, workspace_config_file})
+		print("result? " .. result)
+		load_config_file(workspace_config_file)
+	end
 end
 
 -- command to open workspace
 vim.api.nvim_create_user_command("Workspace",
 	function(opt)
-		target_workspace = get_workspace_files()[opt.args]
-		open_workspace(target_workspace)
+		local target_workspace = Workspace.get_workspace_files()[opt.args]
+		Workspace.open(target_workspace, opt.args)
 	end,
 	{
 		nargs = 1,
-		complete = function(_, _, _)
+		complete = function(lead, _, _)
 			local res = {}
-			for k, _ in pairs(get_workspace_files()) do
-				res[#res + 1] = k
+			local lead_lower = string.lower(lead)
+			-- autocomplete results for workspace name
+			for k, _ in pairs(Workspace.get_workspace_files()) do
+				local workspace_name = string.lower(k)
+				if Helpers.string_starts_with(workspace_name, lead_lower) then
+					res[#res + 1] = k
+				end
 			end
 			return res
 		end,
@@ -67,8 +91,55 @@ vim.api.nvim_create_user_command("Workspace",
 
 -- command to open file with all workspaces listed
 vim.api.nvim_create_user_command("WorkspacePaths",
-	function(opt)
-		vim.cmd("e " .. Consts.WORKSPACE_FILE)
+	function()
+		vim.cmd("e " .. Consts.WORKSPACES_FILE)
 	end,
 	{ nargs = 0, }
 )
+
+-- command to open file for current workspace config
+vim.api.nvim_create_user_command("WorkspaceConfig",
+	function()
+		if Workspace.context["_workspace_name"] == nil then
+			print("no workspace currently selected")
+			return
+		end
+
+		vim.cmd("e " .. Workspace.context["_workspace_config"])
+	end,
+	{ nargs = 0, }
+)
+
+vim.api.nvim_create_user_command("WorkspaceCmd",
+	function(opt)
+		if Workspace.context["_workspace_name"] == nil then
+			print("no workspace currently selected")
+			return
+		end
+
+		local cmd_alias = opt.args
+		if Workspace.context.opts.cmds[cmd_alias] ~= nil then
+			local cmd = Workspace.context.opts.cmds[cmd_alias]
+			vim.cmd("Dispatch " .. cmd)
+		else
+			print("command \"" .. cmd_alias .. "\" not defined")
+		end
+	end,
+	{
+		nargs = 1,
+		complete = function(lead, _, _)
+			local res = {}
+
+			local lead_lower = string.lower(lead)
+			for k, _ in pairs(Workspace.context.opts.cmds) do
+				local cmd_alias_lower = string.lower(k)
+				if Helpers.string_starts_with(cmd_alias_lower, lead_lower) then
+					res[#res + 1] = k
+				end
+			end
+
+			return res
+		end,
+	}
+)
+
