@@ -59,9 +59,7 @@ Workspace.open = function (workspace_dir, workspace_name)
 	elseif Helpers.file_exists(workspace_config_file) then -- config file in nvim data directory
 		load_config_file(workspace_config_file)
 	else -- no config file, copy template over and load it
-		print("copying " .. Consts.WORKSPACE_CONFIG_TEMPLATE_FILE .. " to " .. workspace_config_file)
-		local result = vim.fn.system({"cp", Consts.WORKSPACE_CONFIG_TEMPLATE_FILE, workspace_config_file})
-		print("result? " .. result)
+		vim.fn.system({"cp", Consts.WORKSPACE_CONFIG_TEMPLATE_FILE, workspace_config_file})
 		load_config_file(workspace_config_file)
 	end
 
