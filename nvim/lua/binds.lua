@@ -21,6 +21,10 @@ vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = t
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true })
 
+-- workspace binds
+vim.keymap.set("n", "<leader>wa", "<cmd>AbortDispatch<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>we", "<cmd>WorkspaceCmdSelector<cr>", { noremap = true })
+
 -- misc
 vim.keymap.set("c", "qq", "qa")
 

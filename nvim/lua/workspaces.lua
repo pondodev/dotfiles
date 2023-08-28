@@ -23,6 +23,7 @@ Workspace.get_workspace_files = function()
             end
         end
     end
+
     return available_workspace
 end
 
@@ -79,6 +80,7 @@ vim.api.nvim_create_user_command("Workspace",
         complete = function(lead, _, _)
             local res = {}
             local lead_lower = string.lower(lead)
+
             -- autocomplete results for workspace name
             for k, _ in pairs(Workspace.get_workspace_files()) do
                 local workspace_name = string.lower(k)
@@ -86,6 +88,8 @@ vim.api.nvim_create_user_command("Workspace",
                     res[#res + 1] = k
                 end
             end
+
+            table.sort(res)
             return res
         end,
     }
@@ -112,6 +116,15 @@ vim.api.nvim_create_user_command("WorkspaceConfig",
     { nargs = 0, }
 )
 
+Workspace.run_command = function(cmd_alias)
+    if Workspace.context.opts.cmds[cmd_alias] ~= nil then
+        local cmd = Workspace.context.opts.cmds[cmd_alias]
+        vim.cmd("Dispatch " .. cmd)
+    else
+        print("command \"" .. cmd_alias .. "\" not defined")
+    end
+end
+
 -- command to run a workspace command alias
 vim.api.nvim_create_user_command("WorkspaceCmd",
     function(opt)
@@ -121,12 +134,7 @@ vim.api.nvim_create_user_command("WorkspaceCmd",
         end
 
         local cmd_alias = opt.args
-        if Workspace.context.opts.cmds[cmd_alias] ~= nil then
-            local cmd = Workspace.context.opts.cmds[cmd_alias]
-            vim.cmd("Dispatch " .. cmd)
-        else
-            print("command \"" .. cmd_alias .. "\" not defined")
-        end
+        Workspace.run_command(cmd_alias)
     end,
     {
         nargs = 1,
@@ -150,4 +158,55 @@ vim.api.nvim_create_user_command("WorkspaceCmd",
         end,
     }
 )
+
+-- command to open a list of the current workspace's commands
+local popup = require("plenary.popup")
+local commands_popup_id = nil
+vim.api.nvim_create_user_command("WorkspaceCmdSelector",
+    function()
+        if Workspace.context["_workspace_name"] == nil then
+            print("no workspace currently selected")
+            return
+        end
+
+        -- get list of commands
+        local commands = {}
+        for k, _ in pairs(Workspace.context.opts.cmds) do
+            commands[#commands + 1] = k
+        end
+        table.sort(commands)
+
+        -- function to be called on selection of an option
+        local callback = function(_, selection)
+            -- at this point the popup will already be closed
+            Workspace.run_command(selection)
+            commands_popup_id = nil
+        end
+
+        local width = 50
+        local height = 20
+        local opts = {
+            title       = Workspace.context["_workspace_name"] .. " commands",
+            line        = math.floor(((vim.o.lines - height) / 2) - 1),
+            col         = math.floor((vim.o.columns - width) / 2),
+            minwidth    = width,
+            minheight   = height,
+            callback    = callback,
+            border      = {},
+        }
+        -- open the popup
+        commands_popup_id = popup.create(commands, opts)
+
+        -- some extra config for the popup
+        local buf = vim.api.nvim_win_get_buf(commands_popup_id)
+        vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>lua Workspace.close_commands_popup()<cr>", { silent = false })
+        vim.opt_local.modifiable = false
+    end,
+    { nargs = 0, }
+)
+
+Workspace.close_commands_popup = function()
+    vim.api.nvim_win_close(commands_popup_id, true)
+    commands_popup_id = nil
+end
 
