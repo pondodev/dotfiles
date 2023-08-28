@@ -64,9 +64,15 @@ Workspace.open = function (workspace_dir, workspace_name)
         load_config_file(workspace_config_file)
     end
 
+    -- set a fun title :)
     vim.opt.title = true
     local indicator = Consts.WORKSPACE_INDICATORS[Helpers.random_num(#Consts.WORKSPACE_INDICATORS)]
     vim.opt.titlestring = indicator .. " wksp: " .. workspace_name
+
+    -- setup the layout
+    vim.cmd("NERDTree")
+    vim.cmd("wincmd p")
+    vim.cmd("enew")
 end
 
 -- command to open workspace
