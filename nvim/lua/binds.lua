@@ -25,6 +25,7 @@ vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true
 vim.keymap.set("n", "<leader>wa", "<cmd>AbortDispatch<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>we", "<cmd>lua Workspace.open_commands_popup()<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>ww", "<cmd>lua Workspace.run_last_command()<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>wt", "<cmd>lua Workspace.open_targets_popup()<cr>", { noremap = true })
 
 -- misc
 vim.keymap.set("c", "qq", "qa")
