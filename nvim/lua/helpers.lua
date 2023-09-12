@@ -21,13 +21,19 @@ Helpers.random_num = function(max)
 end
 
 Helpers.string_replace = function(str, to_replace, replacement)
-    startIndex, endIndex = string.find(str, to_replace)
-    if startIndex == nil then
-        return str
-    end
 
-    local startStr = string.sub(str, 1, startIndex - 1)
-    local endStr = string.sub(str, endIndex + 1, -1)
-    return startStr .. replacement .. endStr
+    local working_str = str
+    local start_index, end_index = nil, nil
+
+    repeat
+        start_index, end_index = string.find(working_str, to_replace)
+        if start_index ~= nil then
+            local start_str = string.sub(working_str, 1, start_index - 1)
+            local end_str = string.sub(working_str, end_index + 1, -1)
+            working_str = start_str .. replacement .. end_str
+        end
+    until start_index == nil
+
+    return working_str
 end
 
