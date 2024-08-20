@@ -12,9 +12,9 @@ vim.keymap.set("n", "<C-g>s", "<cmd>Git status<cr>")
 vim.keymap.set("", "<C-e>", "<cmd>NERDTreeToggle<cr>")
 vim.keymap.set("!", "<C-e>", "<cmd>NERDTreeToggle<cr>")
 
--- folds
-vim.keymap.set("", "<Space>", "za", { noremap = true })
-vim.keymap.set("", "<CR>", "zA", { noremap = true })
+-- lsp
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
 -- telescope binds
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = true })
